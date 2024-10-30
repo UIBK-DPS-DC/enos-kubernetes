@@ -1,7 +1,9 @@
 Enos-kubernetes
 ===============
 
-|Build Status| |License| |Pypi|
+|License|
+
+This is a fork of: https://gitlab.inria.fr/discovery/enos-kubernetes
 
 Deploys Kubernetes on various providers. Deployments are for
 evaluation/experimental purpose (not production).
