@@ -1,6 +1,0 @@
-# maybe there is a better way to do it:
-# https://stackoverflow.com/questions/1612733
-
-recursive-include enos_kubernetes/ansible *
-include enos_kubernetes/build_conf.yml
-include LICENSE.txt

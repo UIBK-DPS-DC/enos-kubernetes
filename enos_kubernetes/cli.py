@@ -138,3 +138,6 @@ def build(provider, cluster):
     t.inventory()
     t.prepare()
     t.reset()
+
+if __name__ == "__main__":
+    cli()
