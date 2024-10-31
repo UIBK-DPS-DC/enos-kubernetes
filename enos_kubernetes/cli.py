@@ -2,6 +2,9 @@ import click
 import os
 import yaml
 
+from ansible.parsing.dataloader import DataLoader
+from ansible.inventory.manager import InventoryManager
+
 import enos_kubernetes.tasks as t
 from enos_kubernetes.constants import CONF, BUILD_CONF_PATH, DEFAULT_BUILD_CLUSTER
 
@@ -34,6 +37,22 @@ def load_build_conf(provider, cluster=DEFAULT_BUILD_CLUSTER, working_dir=None):
             working_dir = os.path.join(os.getcwd(), "working_dir")
             provider_conf["working_dir"] = working_dir
     return conf
+
+
+@cli.command(help="List the currently deployed environment")
+def list():
+    inventory_file_name = "current/hosts"
+    if not os.path.isfile(inventory_file_name):
+        click.echo("Expected the current/hosts to exist, cannot continue")
+
+    data_loader = DataLoader()
+    inventory = InventoryManager(loader=data_loader, sources=[inventory_file_name])
+
+    for group, hosts in inventory.get_groups_dict().items():
+        click.echo(f"Group: {group}")
+        for name in hosts:
+            host = inventory.get_host(name)
+            click.echo(f" Host: {host.name} Address: {host.vars['ansible_host']}")
 
 
 @cli.command(help="Claim resources on Grid'5000 (frontend).")
