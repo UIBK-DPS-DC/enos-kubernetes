@@ -1,2 +1,5 @@
-click
-enoslib
+ansible-core==2.13.13
+click==8.1.7
+enoslib==10.0.0
+enoslib-ansible==6.7.0.4
+virtualenv

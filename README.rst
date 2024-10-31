@@ -5,6 +5,9 @@ Enos-kubernetes
 
 This is a fork of: https://gitlab.inria.fr/discovery/enos-kubernetes
 
+The original project did not work correctly for us, we make some small changes
+and gather the correct dependencies.
+
 Deploys Kubernetes on various providers. Deployments are for
 evaluation/experimental purpose (not production).
 
@@ -45,9 +48,10 @@ Usage overview
 
 Install the project::
 
-    virtualenv -p python3 venv
-    source venv/bin/activate
-    pip install enos-kubernetes
+    conda create --name EnOSKubernetes python=3.8.12 ipython
+    conda activate EnOSKubernetes
+    conda install pip
+    pip install -r requirements.txt
 
 Configure the Grid5000 REST API access::
 
@@ -56,27 +60,23 @@ Configure the Grid5000 REST API access::
     password: MYPASSWORD
     ' > ~/.python-grid5000.yaml
 
-Get a sample configuration file at::
-
-    wget https://gitlab.inria.fr/msimonin/enos-kubernetes/raw/master/conf.yaml
+For an example configuration file, see conf.yaml.example.
 
 Deploy on g5k::
 
-    ek deploy g5k
-
+    python -m enos_kubernetes.cli deploy g5k
 
 Deploy on g5k using virtual machines::
 
-    ek deploy vmong5k
-
+    python -m enos_kubernetes.cli deploy vmong5k
 
 Build a base image on g5k::
 
-    ek build g5k
+    python -m enos_kubernetes.cli deploy g5k
 
 Build a base image on vmong5k with an alternative cluster::
 
-    ek build vmong5k --cluster=chetemi
+    python -m enos_kubernetes.cli deploy build vmong5k --cluster=chetemi
 
 This also can be used from python directly using the provided API::
 
@@ -89,14 +89,5 @@ This also can be used from python directly using the provided API::
     tasks.prepare(...)
     ...
 
-
-
-.. |Build Status| image:: https://gitlab.inria.fr/msimonin/enos-Kubernetes/badges/master/pipeline.svg
-   :target: https://gitlab.inria.fr/msimonin/enos-kubernetes/pipelines
-
 .. |License| image:: https://img.shields.io/badge/License-GPL%20v3-blue.svg
    :target: https://www.gnu.org/licenses/gpl-3.0
-
-.. |Pypi| image:: https://badge.fury.io/py/enos-kubernetes.svg
-   :target: https://badge.fury.io/py/enos-kubernetes
-
